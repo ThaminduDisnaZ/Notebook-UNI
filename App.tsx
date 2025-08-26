@@ -3,8 +3,8 @@ import { Alert, Button, Image, Pressable, ScrollView, Text, View } from 'react-n
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 export default function App() {
-    const [image, setImage] = useState<string | null>(null);
-    const pickImage = async () => {
+  const [image, setImage] = useState<string | null>(null);
+  const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images', 'videos'],
@@ -13,13 +13,14 @@ export default function App() {
       quality: 1,
     });
 
-    
+
     console.log(result);
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
   }
-    return (
+  return (
+    <SafeAreaView>
       <ScrollView>
         <View>
           <Text>Create Account</Text>
@@ -27,15 +28,20 @@ export default function App() {
         </View>
         <View>
           <Pressable onPress={pickImage}>
-            if (image != null) {
-              
-            }
-            
+            {image ? (
+              <Image source={{ uri: image }} />
+            ) : (
+              <View>
+                <Text>+</Text>
+                <Text>Pick an image</Text>
+              </View>
+            )}
           </Pressable>
         </View>
       </ScrollView>
-    );
-  
+    </SafeAreaView >
+  );
+
 }
 
 
